@@ -94,6 +94,7 @@ function App() {
         getHAmbHistoryData();
         getDataHSueloStats();
         getDataTopWind();
+        console.log('ejecutado');
         },1800000)
         
         return () => {
