@@ -94,7 +94,7 @@ function App() {
         getHAmbHistoryData();
         getDataHSueloStats();
         getDataTopWind();
-        },6000/*1800000*/)
+        },1800000)
         
         return () => {
             clearInterval(interval);
