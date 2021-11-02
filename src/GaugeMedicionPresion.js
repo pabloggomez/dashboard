@@ -16,7 +16,7 @@ const GaugeMedicion = ({title,percent}) => {
           color: '#4B535E',
         },
         formatter: function formatter(a) {
-          return `${a.percent}%`;
+          return `${a.percent}hPa`;
         },
       },
       content: {
