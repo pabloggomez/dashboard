@@ -33,7 +33,7 @@ function App() {
        const dataTempHum = values[0].filter(item => item.descripcion.includes("Humedad")|| item.descripcion==="Temperatura");
        setDataTempHum(dataTempHum);
        const dataVientoPressure = values[0].filter(item => item.descripcion.includes("Viento")|| item.descripcion==="Presión");
-       console.log(dataVientoPressure);
+       //console.log(dataVientoPressure);
        setDataViento(dataVientoPressure);
         const lastTime = dataTempHum[0].med_fechaHoraSMS;
         setLastTime(lastTime);
