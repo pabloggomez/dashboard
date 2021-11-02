@@ -5,6 +5,7 @@ import Clock from './Clock';
 import { useEffect, useState } from 'react';
 import { get } from '@antv/util';
 import LiquidMedicion from './LiquidMedicion';
+import GaugeMedicionPresion from './GaugeMedicionPresion';
 import GaugeMedVelViento from './GaugeMedVelViento';
 import GaugeDireccionViento from './GaugeDireccionViento';
 import LastMeasure from './LastMeasure';
@@ -15,13 +16,14 @@ import MaxDataWind from './MaxDataWind';
 function App() {
 
     const [lastTime,setLastTime]= useState([]);
-    const [dataViento,setDataViento]= useState([]);
+    const [dataVientoPressure,setDataViento]= useState([]);
     const [dataTempHistory,setDataTempHistory]= useState([]);
     const [dataHSueloHistory,setDataHSueloHistory]= useState([]);
     const [dataHAmbHistory,setDataHAmbHistory]= useState([]);
     const [dataTempHum,setDataTempHum]= useState([]);
     const [dataTopWind,setDataTopWind]= useState([]);
     const [dataHSueloStats,setDataHSueloStats]= useState([]);
+    //const [dataPressure,setDataPressure]= useState([]);
     
     const getData= async() =>{
 
@@ -30,8 +32,9 @@ function App() {
         
        const dataTempHum = values[0].filter(item => item.descripcion.includes("Humedad")|| item.descripcion==="Temperatura");
        setDataTempHum(dataTempHum);
-       const dataViento = values[0].filter(item => item.descripcion.includes("Viento"));
-       setDataViento(dataViento);
+       const dataVientoPressure = values[0].filter(item => item.descripcion.includes("Viento")|| item.descripcion==="Presion");
+       console.log(dataVientoPressure);
+       setDataViento(dataVientoPressure);
         const lastTime = dataTempHum[0].med_fechaHoraSMS;
         setLastTime(lastTime);
 
@@ -130,9 +133,9 @@ return(
         </div> */}
         </div>
         <div style={{display:'flex',justifyContent:'space-evenly', marginTop:50}}> 
-        {dataViento.length>0 && dataViento.map((item,index) =>(
+        {dataVientoPressure.length>0 && dataVientoPressure.map((item,index) =>(
                 <div className="chartCell" key={index} style={{width:300, height:200}}>
-           { item.descripcion === "Direccion Viento" ? <GaugeDireccionViento title={item.descripcion} percent={item.med_valor}/> : <GaugeMedVelViento title={item.descripcion} percent={item.med_valor}/>
+           { item.descripcion === "Direccion Viento" ? <GaugeDireccionViento title={item.descripcion} percent={item.med_valor}/> : (item.descripcion === "Velocidad Viento" ? <GaugeMedVelViento title={item.descripcion} percent={item.med_valor}/> : <GaugeMedicionPresion title={item.descripcion} percent={item.med_valor}/>) 
 }           </div>
             ))}
             </div>
