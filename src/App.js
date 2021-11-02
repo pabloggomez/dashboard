@@ -33,7 +33,6 @@ function App() {
        const dataTempHum = values[0].filter(item => item.descripcion.includes("Humedad")|| item.descripcion==="Temperatura");
        setDataTempHum(dataTempHum);
        const dataVientoPressure = values[0].filter(item => item.descripcion.includes("Viento")|| item.descripcion==="Presión");
-       //console.log(dataVientoPressure);
        setDataViento(dataVientoPressure);
         const lastTime = dataTempHum[0].med_fechaHoraSMS;
         setLastTime(lastTime);
@@ -70,7 +69,6 @@ function App() {
         const response= await fetch('https://cemsa-node-deploy.herokuapp.com/weather/topVientoStats');
         const values = await response.json();
         const dataTopWind = values[0][0];
-        //console.log(dataTopWind);
         setDataTopWind(dataTopWind);        
      };
 
@@ -97,7 +95,6 @@ function App() {
         getHAmbHistoryData();
         getDataHSueloStats();
         getDataTopWind();
-        console.log('ejecutado');
         },1800000)
         
         return () => {

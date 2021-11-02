@@ -14,20 +14,6 @@ const LineChartMedicion = ({data}) => {
       return group;
     },
   });
-  /* const [data, setData] = useState([]);
-   useEffect(() => {
-     asyncFetch();
-   }, []);*/
-   /*const asyncFetch = () => {
-     fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/cpu-data.json')
-       .then((response) => response.json())
-       .then((json) => setData(json))
-       .catch((error) => {
-         console.log('fetch data failed', error);
-       });
-     
-   };*/
-  //console.log(data);
   let config = {
     autoFit: false,
     height: 200,

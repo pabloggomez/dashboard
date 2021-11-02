@@ -1,7 +1,7 @@
 import React, { } from 'react';
 
 const MaxDataWind = ({data}) => {
-    //console.log(data);
+
     const message1= `${data.valorVeloc} ${data.unidadVeloc}`;
     const message2= `${data.PromDireccion} ${data.unidadDirec}`;
     const message3= data.dia;
