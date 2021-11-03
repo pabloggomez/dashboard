@@ -11,10 +11,12 @@ import GaugeDireccionViento from './GaugeDireccionViento';
 import LastMeasure from './LastMeasure';
 import LineDataPointChartHSuelo from './LineDataPointChartHSuelo';
 import MaxDataWind from './MaxDataWind';
+import { useParams } from 'react-router';
 
-
+const URL_API="https://cemsa-node-deploy.herokuapp.com/weather"
 function App() {
 
+    const {nroCentral}=useParams();
     const [lastTime,setLastTime]= useState([]);
     const [dataVientoPressure,setDataViento]= useState([]);
     const [dataTempHistory,setDataTempHistory]= useState([]);
@@ -23,11 +25,11 @@ function App() {
     const [dataTempHum,setDataTempHum]= useState([]);
     const [dataTopWind,setDataTopWind]= useState([]);
     const [dataHSueloStats,setDataHSueloStats]= useState([]);
-    //const [dataPressure,setDataPressure]= useState([]);
+    //const [dataPressure,setDataPressure]= useState([]);``
     
     const getData= async() =>{
 
-       const response= await fetch('https://cemsa-node-deploy.herokuapp.com/weather/now');
+       const response= await fetch(`${URL_API}/${nroCentral}/now`);
        const values = await response.json();
         
        const dataTempHum = values[0].filter(item => item.descripcion.includes("Humedad")|| item.descripcion==="Temperatura");
@@ -41,7 +43,7 @@ function App() {
 
     const getTempHistoryData= async() =>{
 
-        const response= await fetch('https://cemsa-node-deploy.herokuapp.com/weather/tempHistory');
+        const response= await fetch(`${URL_API}/${nroCentral}/tempHistory`);
         const values = await response.json();
         
         setDataTempHistory(values[0]);
@@ -50,7 +52,7 @@ function App() {
 
      const getHSueloHistoryData= async() =>{
 
-        const response= await fetch('https://cemsa-node-deploy.herokuapp.com/weather/hSueloHistory');
+        const response= await fetch(`${URL_API}/${nroCentral}/hSueloHistory`);
         const values = await response.json();
         setDataHSueloHistory(values[0]);
         
@@ -58,7 +60,7 @@ function App() {
 
      const getHAmbHistoryData= async() =>{
 
-        const response= await fetch('https://cemsa-node-deploy.herokuapp.com/weather/hAmbHistory');
+        const response= await fetch(`${URL_API}/${nroCentral}/hAmbHistory`);
         const values = await response.json();
         setDataHAmbHistory(values[0]);
         
@@ -66,7 +68,7 @@ function App() {
 
      const getDataTopWind= async() =>{
 
-        const response= await fetch('https://cemsa-node-deploy.herokuapp.com/weather/topVientoStats');
+        const response= await fetch(`${URL_API}/${nroCentral}/topVientoStats`);
         const values = await response.json();
         const dataTopWind = values[0][0];
         setDataTopWind(dataTopWind);        
@@ -74,7 +76,7 @@ function App() {
 
      const getDataHSueloStats= async() =>{
 
-        const response= await fetch('https://cemsa-node-deploy.herokuapp.com/weather/hSueloStats');
+        const response= await fetch(`${URL_API}/${nroCentral}/hSueloStats`);
         const values = await response.json();
         setDataHSueloStats(values[0]);
         
@@ -108,7 +110,7 @@ function App() {
 return(
     <div className="App-header">
         <div style={{display: 'flex',justifyContent:'space-evenly'}}>
-            <div><h1>Central Meteorológica 1</h1></div>
+            <div><h1>Central Meteorológica {nroCentral}</h1></div>
             <div><Clock/></div>
             
         </div>
