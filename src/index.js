@@ -13,7 +13,7 @@ import {
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Switch>
       <Route path="/:nroCentral/dashboard">
       <App />
