@@ -15,8 +15,9 @@ import { useParams } from 'react-router';
 
 const URL_API="https://cemsa-node-deploy.herokuapp.com/weather"
 function App() {
-
-    const {nroCentral}=useParams();
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const nroCentral = urlParams.get('nroCentral')||99;
     const [lastTime,setLastTime]= useState([]);
     const [dataVientoPressure,setDataViento]= useState([]);
     const [dataTempHistory,setDataTempHistory]= useState([]);
@@ -45,7 +46,7 @@ function App() {
 
         const response= await fetch(`${URL_API}/${nroCentral}/tempHistory`);
         const values = await response.json();
-        
+
         setDataTempHistory(values[0]);
         
      };

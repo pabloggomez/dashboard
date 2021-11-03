@@ -12,13 +12,13 @@ import {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router basename={process.env.PUBLIC_URL}>
+    <App />
+    {/* <Router basename={process.env.PUBLIC_URL}>
     <Switch>
-      <Route path="/:nroCentral/dashboard">
-      <App />
+      <Route path="/dashboard">
       </Route>
     </Switch>
-    </Router>
+    </Router>  */}
   </React.StrictMode>,
   document.getElementById('root')
 );
