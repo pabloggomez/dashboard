@@ -37,7 +37,8 @@ function App() {
        setDataTempHum(dataTempHum);
        const dataVientoPressure = values[0].filter(item => item.descripcion.includes("Viento")|| item.descripcion==="Presión");
        setDataViento(dataVientoPressure);
-        const lastTime = dataTempHum[0].med_fechaHoraSMS;
+        let lastTime;
+        dataTempHum[0] ? lastTime= dataTempHum[0].med_fechaHoraSMS: lastTime="00-00-00 00:00:00";
         setLastTime(lastTime);
 
     };
@@ -119,7 +120,7 @@ return(
         
             {dataTempHum.length>0 && dataTempHum.map((item,index) =>(
                 <div className="chartCell" key={index} style={{width:300, height:200}}>
-               { item.descripcion === "Temperatura" ? <BulletMedicion temperatures={[item.med_valor]}/> : <LiquidMedicion title={item.descripcion} percent={item.med_valor}/>
+               { item.descripcion === "Temperatura" ? <BulletMedicion temperatures={[item.med_valor]}/> : item.descripcion === "Humedad Suelo" ?<LiquidMedicion title={item.descripcion} percent={item.med_valor}/> : item.descripcion === "Humedad Ambiente" ?<LiquidMedicion title={item.descripcion} percent={item.med_valor}/> :""
             }</div>
             ))}
             
@@ -135,23 +136,23 @@ return(
         <div style={{display:'flex',justifyContent:'space-evenly', marginTop:50}}> 
         {dataVientoPressure.length>0 && dataVientoPressure.map((item,index) =>(
                 <div className="chartCell" key={index} style={{width:300, height:200}}>
-           { item.descripcion === "Direccion Viento" ? <GaugeDireccionViento title={item.descripcion} percent={item.med_valor}/> : (item.descripcion === "Velocidad Viento" ? <GaugeMedVelViento title={item.descripcion} percent={item.med_valor}/> : <GaugeMedicionPresion title={item.descripcion} percent={item.med_valor}/>) 
+           { item.descripcion === "Direccion Viento" ? <GaugeDireccionViento title={item.descripcion} percent={item.med_valor}/> : (item.descripcion === "Velocidad Viento" ? <GaugeMedVelViento title={item.descripcion} percent={item.med_valor}/> : item.descripcion === "Presión" ? <GaugeMedicionPresion title={item.descripcion} percent={item.med_valor}/>:"") 
 }           </div>
             ))}
             </div>
         <div style={{display:'flex',justifyContent:'space-evenly', marginTop:50}}>
 
         <div className="chartCell" style={{width:300, height:300}}>
-            <h2 style={{color : '#4b535e'}}>T° ult. 24 hs</h2> 
-             <LineChartMedicion data={dataTempHistory}/>
+             
+             {dataTempHistory.length>0 ? <><h2 style={{color : '#4b535e'}}>T° ult. 24 hs</h2> <LineChartMedicion data={dataTempHistory}/></>: ""}
         </div> 
         <div className='chartCell' style={{width:300, height:300}}> 
-        <h2 style={{color : '#4b535e'}}>H. Suelo[%] ult. 24 hs</h2> 
-             <LineChartMedicion data={dataHSueloHistory}/> 
+        
+            {dataHSueloHistory.length>0 ? <><h2 style={{color : '#4b535e'}}>H. Suelo[%] ult. 24 hs</h2> <LineChartMedicion data={dataHSueloHistory}/></> :""}
         </div>
         <div className="chartCell" style={{width:300, height:300}}>
-        <h2 style={{color : '#4b535e'}}>H. Amb.[%] ult. 24 hs</h2> 
-             <LineChartMedicion data={dataHAmbHistory}/> 
+        
+            {dataHAmbHistory.length>0 ? <><h2 style={{color : '#4b535e'}}>H. Amb.[%] ult. 24 hs</h2> <LineChartMedicion data={dataHAmbHistory}/></> :""}
         </div>
 
         </div>
@@ -159,12 +160,12 @@ return(
         <div style={{display:'flex',justifyContent:'space-evenly', marginTop:50}}>
 
         <div className='chartCell' style={{width:500, height:300}}> 
-        <h2 style={{color : '#4b535e'}}>Humedad Suelo Promedio Mensual</h2> 
-             <LineDataPointChartHSuelo data={dataHSueloStats}/> 
+        
+        {dataHSueloStats.length>0 ?<><h2 style={{ color: '#4b535e' }}>Humedad Suelo Promedio Mensual</h2><LineDataPointChartHSuelo data={dataHSueloStats} /></> :""}
         </div>
         <div className='chartCell' style={{width:500, height:300}}> 
         <h2 style={{color : '#4b535e'}}></h2> 
-             <MaxDataWind data={dataTopWind}/> 
+             {dataTopWind ? <MaxDataWind data={dataTopWind}/> :""}
         </div>
         </div>
 
@@ -172,7 +173,7 @@ return(
         <div style={{display:'flex',justifyContent:'space-evenly', marginTop:50}}>
         <div className="chartCell" style={{width:300, height:120 , display: 'flex', flexDirection: 'column',alignItems: 'center'}}>
 
-            <LastMeasure lastMeasure={lastTime}/>
+            {lastTime ? <LastMeasure lastMeasure={lastTime}/> :""}
 
         </div> 
             
